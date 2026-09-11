@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carol Reis | High-End Lifestyle & Digital Creator</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Engine -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --rose-gold: #e0a96d;
+            --glass-bg: rgba(18, 18, 18, 0.7);
+            --glass-border: rgba(212, 175, 55, 0.35);
+            --text-light: #fefefe;
+            --text-muted: #cccccc;
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: var(--text-light);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* Luxury Parallax Backdrop */
+        .bg-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(13,13,13,0.5) 0%, rgba(13,13,13,0.92) 100%),
+                        url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+            filter: brightness(0.85);
+        }
+
+        #goldCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 25px;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold-primary);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .story-ring {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 2px dashed var(--gold-primary);
+            animation: spinRing 20s linear infinite;
+        }
+
+        @keyframes spinRing {
+            100% { transform: rotate(360deg); }
+        }
+
+        .verified-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            background: linear-gradient(45deg, var(--gold-primary), var(--rose-gold));
+            color: #121212;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .profile-name {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #ffffff, var(--gold-light), var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .profile-handle {
+            font-size: 1rem;
+            color: var(--gold-primary);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .profile-bio {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 25px;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .city-pills {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .city-pill {
+            padding: 8px 20px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Highlights Bar */
+        .highlights-bar {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            overflow-x: auto;
+            padding: 10px 0 40px;
+        }
+
+        .hl-item {
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: transform 0.4s;
+            flex-shrink: 0;
+        }
+
+        .hl-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .hl-circle {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--gold-primary), var(--rose-gold));
+            margin-bottom: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .hl-circle img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #121212;
+        }
+
+        .hl-title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.4rem;
+            letter-spacing: 2px;
+            color: var(--gold-light);
+        }
+
+        /* Coupons Grid */
+        .coupons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .coupon-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            transition: all 0.4s ease;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .coupon-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+        }
+
+        .badge-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold-primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            border: 1px solid var(--gold-primary);
+        }
+
+        .brand-name {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--rose-gold);
+            margin-bottom: 8px;
+        }
+
+        .offer-title {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .coupon-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px dashed var(--gold-primary);
+            margin-top: 20px;
+        }
+
+        .code-txt {
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--gold-light);
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, var(--gold-primary), var(--rose-gold));
+            color: #000;
+            font-weight: 600;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* Feed */
+        .feed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .feed-item {
+            position: relative;
+            height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .feed-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .feed-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .feed-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+        }
+
+        .cat-tag {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold-primary);
+        }
+
+        .card-heading {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: #fff;
+            margin-top: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 40px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            color: var(--gold-light);
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .socials a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--gold-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .socials a:hover {
+            background: var(--gold-primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-backdrop"></div>
+    <canvas id="goldCanvas"></canvas>
+
+    <div class="main-wrapper">
+
+        <!-- Profile Card -->
+        <section class="profile-card" data-aos="zoom-in">
+            <div class="avatar-wrapper">
+                <div class="story-ring"></div>
+                <!-- Real GitHub Avatar Link -->
+                <img src="https://raw.githubusercontent.com/alisalehi68/bycarolreiscv/main/carol%20cais.png" alt="Carol Reis" class="avatar-img">
+                <div class="verified-badge"><i class="fa-solid fa-check"></i></div>
+            </div>
+
+            <h1 class="profile-name">Carol Reis</h1>
+            <div class="profile-handle">@bycarolreiscv</div>
+
+            <p class="profile-bio">
+                Para mulheres que buscam equilíbrio. Cool tips, beauty tech, and intentional lifestyle curated between London & São Paulo.
+            </p>
+
+            <div class="city-pills">
+                <span class="city-pill"><i class="fa-solid fa-location-dot"></i> London</span>
+                <span class="city-pill"><i class="fa-solid fa-plane"></i> Madrid</span>
+                <span class="city-pill"><i class="fa-solid fa-location-dot"></i> São Paulo</span>
+            </div>
+        </section>
+
+        <!-- Highlights Bar -->
+        <div class="highlights-bar" data-aos="fade-up">
+            <a href="#coupons" class="hl-item">
+                <div class="hl-circle">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=200&auto=format&fit=crop" alt="Cupons">
+                </div>
+                <span class="hl-title">Cupons</span>
+            </a>
+            <a href="#beauty" class="hl-item">
+                <div class="hl-circle">
+                    <img src="https://images.unsplash.com/photo-1512290900673-700200053758?q=80&w=200&auto=format&fit=crop" alt="Skin Care">
+                </div>
+                <span class="hl-title">Skin Tech</span>
+            </a>
+            <a href="#wedding" class="hl-item">
+                <div class="hl-circle">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=200&auto=format&fit=crop" alt="Wedding">
+                </div>
+                <span class="hl-title">Casamento</span>
+            </a>
+            <a href="#travel" class="hl-item">
+                <div class="hl-circle">
+                    <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=200&auto=format&fit=crop" alt="London">
+                </div>
+                <span class="hl-title">Londres</span>
+            </a>
+        </div>
+
+        <!-- Coupons Section -->
+        <div class="section-header" id="coupons">
+            <h2 class="section-title" data-aos="fade-up">VIP Discounts & Partnerships</h2>
+        </div>
+
+        <div class="coupons-grid">
+            <div class="coupon-card" data-aos="fade-up" data-aos-delay="100">
+                <span class="badge-tag">15% OFF</span>
+                <div class="brand-name">CurrentBody Skin</div>
+                <h3 class="offer-title">LED Light Therapy Mask</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">The iconic anti-aging LED mask featured in my skin routine.</p>
+                <div class="coupon-box">
+                    <span class="code-txt" id="code1">CAROLLED</span>
+                    <button class="copy-btn" onclick="copyCode('code1', this)">Copy Code</button>
+                </div>
+            </div>
+
+            <div class="coupon-card" data-aos="fade-up" data-aos-delay="200">
+                <span class="badge-tag">EXCLUSIVE</span>
+                <div class="brand-name">Beauty Tech & Glow</div>
+                <h3 class="offer-title">Morning Skincare Set</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Curated European clean skincare essentials.</p>
+                <div class="coupon-box">
+                    <span class="code-txt" id="code2">CAROLGLOW</span>
+                    <button class="copy-btn" onclick="copyCode('code2', this)">Copy Code</button>
+                </div>
+            </div>
+
+            <div class="coupon-card" data-aos="fade-up" data-aos-delay="300">
+                <span class="badge-tag">TRAVEL PERKS</span>
+                <div class="brand-name">Luxury Stays</div>
+                <h3 class="offer-title">Boutique Hotels London & SP</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Special upgrades and complimentary breakfast codes.</p>
+                <div class="coupon-box">
+                    <span class="code-txt" id="code3">CAROLSTAY</span>
+                    <button class="copy-btn" onclick="copyCode('code3', this)">Copy Code</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feed Grid -->
+        <div class="section-header">
+            <h2 class="section-title" data-aos="fade-up">The Lifestyle Journal</h2>
+        </div>
+
+        <div class="feed-grid">
+            <div class="feed-item" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=800&auto=format&fit=crop" alt="Skin Care">
+                <div class="feed-overlay">
+                    <span class="cat-tag">Skin | Beauty</span>
+                    <h3 class="card-heading">Minha Rotina de Skin Tech</h3>
+                </div>
+            </div>
+
+            <div class="feed-item" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="Wedding">
+                <div class="feed-overlay">
+                    <span class="cat-tag">Inspiração</span>
+                    <h3 class="card-heading">Coisas do Meu Casamento</h3>
+                </div>
+            </div>
+
+            <div class="feed-item" data-aos="fade-up" data-aos-delay="300">
+                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=800&auto=format&fit=crop" alt="London">
+                <div class="feed-overlay">
+                    <span class="cat-tag">Londres & SP</span>
+                    <h3 class="card-heading">Cool Tips & Fine Dining</h3>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-logo">Carol Reis</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Digital Creator • London & São Paulo</p>
+
+            <div class="socials">
+                <a href="https://instagram.com/bycarolreiscv" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:bycarolreiscv@gmail.com"><i class="fa-regular fa-envelope"></i></a>
+                <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+
+            <p style="color: #666; font-size: 0.8rem;">&copy; 2026 Carol Reis. Designed for high luxury experience.</p>
+        </footer>
+
+    </div>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        function copyCode(id, btn) {
+            const txt = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(txt);
+            btn.innerText = "COPIED!";
+            btn.style.background = "#fff";
+            btn.style.color = "#000";
+
+            setTimeout(() => {
+                btn.innerText = "Copy Code";
+                btn.style.background = "linear-gradient(45deg, #d4af37, #e0a96d)";
+            }, 2000);
+        }
+
+        // Gold Particle Canvas
+        const canvas = document.getElementById('goldCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const particles = [];
+        for(let i=0; i<35; i++){
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 2 + 0.5,
+                speedY: -(Math.random() * 0.4 + 0.1),
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function drawParticles(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            particles.forEach(p => {
+                ctx.save();
+                ctx.globalAlpha = p.opacity;
+                ctx.fillStyle = "#d4af37";
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+                ctx.fill();
+                ctx.restore();
+
+                p.y += p.speedY;
+                if(p.y < 0){
+                    p.y = canvas.height;
+                    p.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+    </script>
+</body>
+</html>
